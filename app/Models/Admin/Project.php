@@ -22,7 +22,7 @@ class Project extends Model
         'link',
         'image_path',
         'image',
-        'languages',
+        // 'languages',
         'slug',
         'type_id'
     ];

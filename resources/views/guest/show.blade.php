@@ -16,7 +16,13 @@
                 <p class="card-text">Link: <a href="{{ $project->link }}">{{ $project->link }}</a></p>
             @endif
 
-            <p class="card-text">Languages: {{ $project->languages }}</p>
+            {{-- <p class="card-text">Languages: {{ $project->languages }}</p> --}}
+            {{-- Mostra i linguaggi selezionati --}}
+            <div class="card-text">
+                @foreach ($project->technologies as $technology)
+                    <p>{{ $technology->name }}</p>
+                @endforeach
+            </div>
 
             @isset($project->type)
             <p>{{ $project->type->name }}</p>

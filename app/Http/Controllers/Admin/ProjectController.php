@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Admin\Project;
 use App\Models\Admin\Type;
+use App\Models\Admin\Technology;
 
 use Illuminate\Support\Str;
 use Spatie\LaravelIgnition\Recorders\DumpRecorder\Dump;
@@ -42,7 +43,9 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::all();
-        return view('admin\Projects\create', compact('types'));
+        $technologies = Technology::all();
+
+        return view('admin\Projects\create', compact('types', 'technologies'));
     }
 
 
@@ -64,27 +67,32 @@ class ProjectController extends Controller
         'title' => 'required|string|max:255',
         'github' => 'required|string|max:255',
         'link' => 'required|string|max:255',
-        'languages' => 'required|string|max:255',
+        // 'languages' => 'required|string|max:255',
         'image' => 'nullable|image|max:2048', // Aggiunto il controllo per il tipo e la dimensione dell'immagine
-        'type_id' => 'nullable'
+        'type_id' => 'nullable',
+        'technologies' => 'nullable|array',
         ],
         [
         'title.required' => 'Il campo titolo è obbligatorio.',
         'github.required' => 'Il campo GitHub è obbligatorio.',
         'link.required' => 'Il campo link è obbligatorio.',
-        'languages.required' => 'Il campo lingue è obbligatorio.',
+        // 'languages.required' => 'Il campo lingue è obbligatorio.',
         'image.image' => 'Il campo immagine deve essere un file di immagine.',
-        'image.max' => 'La dimensione massima consentita per l\'immagine è 2 MB.',
+        'image.max' => 'La dimensione massima consentita per limmagine è 2 MB',
+        'technologies.array' => 'Il campo tecnologie deve essere un array.',
         ]
     );
 
 
     $form_data = $request->all();
+    $form_data = $request->except('technologies');
 
     if ($request->hasFile('image')) {
         $image_path = $request->file('image')->store('public/images'); // Salva l'immagine nella directory 'public/images'
         $form_data['image'] = $image_path;
     }
+
+
 
     $slug = Project::generateSlug($request->title); // Genera lo slug corretto
     $form_data['slug'] = $slug;
@@ -92,6 +100,12 @@ class ProjectController extends Controller
     $new_project = new Project();
     $new_project->fill($form_data);
     $new_project->save();
+
+
+    if ($request->has('technologies')) {
+        $technologies = $request->input('technologies');
+        $new_project->technologies()->attach($technologies);
+    }
 
     return redirect()->route('projects.index');
 }
@@ -127,8 +141,9 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $types = Type::all();
+        $technologies = Technology::all();
 
-        return view('admin.projects.edit', compact('project', 'types' ));
+        return view('admin.projects.edit', compact('project', 'types', 'technologies' ));
     }
 
 
@@ -153,7 +168,7 @@ class ProjectController extends Controller
         $project->slug = Str::slug($form_data['title']);
         $project->github = $form_data['github'];
         $project->link = $form_data['link'];
-        $project->languages = $form_data['languages'];
+        // $project->languages = $form_data['languages'];
         $project->type_id = $request->type_id; // Aggiungi questa riga per assegnare il nuovo tipo
         $project->save();
     

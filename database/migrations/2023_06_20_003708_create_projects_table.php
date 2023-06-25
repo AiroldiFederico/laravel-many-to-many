@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('github');
             $table->string('link')->nullable();
             $table->string('image')->nullable();
-            $table->string('languages');
+            // $table->string('languages');
             $table->timestamps();
         });
     }

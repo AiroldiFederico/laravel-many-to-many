@@ -56,13 +56,13 @@
                     @enderror
                 
                     {{-- Linguaggi --}}
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label for="project-languages" class="form-label">Languages</label>
                         <input type="text" name="languages" id="project-languages" class="form-control @error('languages') is-invalid @enderror" placeholder="Insert the programming languages">
                     </div>
                     @error('languages')
                     <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
+                    @enderror --}}
 
                     {{-- Ciclo type --}}
                     <label for="project-types" class="form-label">Type</label>
@@ -78,6 +78,21 @@
 
                         </select>
                     </div>
+
+                    {{-- Ciclo Technology --}}
+                    <div class="form-group">
+                        <label for="technologies" class="mb-1">Programming languages</label>
+                        <div>
+                            @foreach ($technologies as $technology)
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="technologies[]" value="{{ $technology->id }}">
+                                <label class="form-check-label">{{ $technology->name }}</label>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+
+
                     @error('type_id')
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
