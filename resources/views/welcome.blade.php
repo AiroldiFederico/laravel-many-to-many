@@ -33,7 +33,7 @@
             	<h2 class="fw-bold">Guarda i miei progetti <a href="{{ route('projects.index') }}" class="text-decoration-none ">qui</a></h2>
 
                 @auth
-                    <p><a href="{{ route('admin.projects.create') }}" class="text-decoration-none ">Aggiungi progetto</a></p>
+                    <h4 class="mt-2"><a href="{{ route('admin.projects.create') }}" class="text-decoration-none fw-bold">Aggiungi progetto</a></h4>
                 @endauth
 
 

@@ -6,7 +6,7 @@
         @csrf
         @method('PUT')
         <div class="form-group">
-            <label for="title" class="mb-1">Titolo</label>
+            <label for="title" class="mb-1">Title</label>
             <input type="text" name="title" id="title" class="form-control" value="{{ $project->title }}" required>
         </div>
         <div class="form-group">
@@ -22,37 +22,43 @@
             <input type="text" name="languages" id="languages" class="form-control" value="{{ $project->languages }}" required>
         </div> --}}
 
-        {{-- Ciclo type --}}
-        <label for="project-types" class="form-label">Type</label>
-        <div class="input-group mb-3 w-25">
-            {{-- <label class="input-group-text" for="project-types">Types</label> --}}
-            <select class="form-select @error('type_id') is-invalid @enderror"" id="project-types" name="type_id">
+        <div class="d-flex gap-3">
 
-                <option value="" selected> Scegli un tipo</option>
-
-                @foreach ($types as $elem)    
-                    <option value="{{ $elem->id }}" {{ old( 'type_id', $project->type_id ) == $elem->id ? 'selected' : '' }}> {{ $elem->name }} </option>
-                @endforeach
-
-            </select>
-        </div>
-
-        {{-- Ciclo technology --}}
-        <div class="form-group">
-            <label for="technologies" class="mb-1">Programming languages</label>
-            @foreach ($technologies as $technology)
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="technologies[]" value="{{ $technology->id }}" {{ in_array($technology->id, $project->technologies->pluck('id')->toArray()) ? 'checked' : '' }}>
-                    <label class="form-check-label" for="technologies">{{ $technology->name }}</label>
+            {{-- Ciclo type --}}
+            <div class="col-6 w-25">
+                <label for="project-types" class="form-label">Type</label>
+                <div class="input-group mb-3 w-100">
+                    {{-- <label class="input-group-text" for="project-types">Types</label> --}}
+                    <select class="form-select @error('type_id') is-invalid @enderror"" id="project-types" name="type_id">
+    
+                        <option value="" selected> Scegli un tipo</option>
+    
+                        @foreach ($types as $elem)    
+                            <option value="{{ $elem->id }}" {{ old( 'type_id', $project->type_id ) == $elem->id ? 'selected' : '' }}> {{ $elem->name }} </option>
+                        @endforeach
+    
+                    </select>
                 </div>
-            @endforeach
+                {{-- @error('type_id')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror --}}
+            </div>
+
+            <div class="col-6">
+                {{-- Ciclo technology --}}
+                <label for="technologies" class="mb-1">Programming languages</label>
+                <div class="form-group mt-1">
+                    <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                        @foreach ($technologies as $technology)
+                            <input type="checkbox" class="btn-check" id="technology-{{ $technology->id }}" name="technologies[]" value="{{ $technology->id }}" autocomplete="off"
+                                {{ in_array($technology->id, $project->technologies->pluck('id')->toArray()) ? 'checked' : '' }}>
+                            <label class="btn btn-outline-primary" for="technology-{{ $technology->id }}">{{ $technology->name }}</label>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+
         </div>
-
-
-        @error('type_id')
-        <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-
 
         <button type="submit" class="btn btn-primary col-2">Aggiorna</button>
     </form>

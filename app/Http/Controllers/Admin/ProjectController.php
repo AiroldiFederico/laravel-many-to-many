@@ -171,6 +171,11 @@ class ProjectController extends Controller
         // $project->languages = $form_data['languages'];
         $project->type_id = $request->type_id; // Aggiungi questa riga per assegnare il nuovo tipo
         $project->save();
+
+        if ($request->has('technologies')) {
+            $technologies = $request->input('technologies');
+            $project->technologies()->sync($technologies); // Utilizza il metodo sync per sincronizzare le tecnologie associate al progetto
+        }
     
         return redirect()->route('admin.projects.show', $project->id);
     }

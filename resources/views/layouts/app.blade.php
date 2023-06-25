@@ -8,8 +8,9 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'FA - Portfolio') }}</title>
+    {{-- <title>{{ config('app.name', 'FA - Portfolio') }}</title> --}}
 
+    <title>FA - Portfolio</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -26,10 +27,9 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
-                    {{-- <div class="logo_laravel">
-                        <img src="{{ asset('images/logonero2.svg') }}" alt="Logo Personalizzato" style="width: 150px;">
-
-                    </div> --}}
+                    <div class="logo_laravel">
+                        <img src="{{ asset('storage/images/logonero2.svg') }}" alt="Logo Personalizzato" style="width: 150px; height: 60px; object-fit: cover;" id="logo">
+                    </div>
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -63,7 +63,7 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ url('admin') }}">{{__('Dashboard')}}</a>
+                                {{-- <a class="dropdown-item" href="{{ url('admin') }}">{{__('Dashboard')}}</a> --}}
                                 <a class="dropdown-item" href="{{ url('admin/profile') }}">{{__('Profile')}}</a>
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

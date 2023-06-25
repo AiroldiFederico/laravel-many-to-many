@@ -13,20 +13,27 @@
                     <img src="{{ asset('storage/' . $project->image) }}" class="card-img-top" alt="{{ $project->title }}">
                     <div class="card-body">
 
-                        <h5 class="card-title">{{ $project->title }}</h5>
+                        <h2 class="card-title fw-bold">{{ $project->title }}</h2>
 
                         {{-- <p class="card-text">{{ $project->languages }}</p> --}}
 
                         {{-- Mostra i linguaggi selezionati --}}
-                        <div class="card-text">
-                            @foreach ($project->technologies as $technology)
-                                <p>{{ $technology->name }}</p>
-                            @endforeach
+                        <div class="">
+                            <p>Programming languages:</p>
+                            <div class="card-text d-flex gap-2 fw-normal">
+                                @foreach ($project->technologies as $technology)
+                                    <p>{{ $technology->name }}</p>
+                                @endforeach
+                            </div>
                         </div>
 
-                        @isset($project->type)
-                        <p>{{ $project->type->name }}</p>
-                        @endisset
+                        <div class="d-flex gap-3">
+                            <p class="">Project type:</p>
+            
+                            @isset($project->type)
+                            <p class="fw-normal">{{ $project->type->name }}</p>
+                            @endisset
+                        </div>
 
                         <a href="{{ route('projects.show', $project->id) }}" class="btn btn-primary">View Details</a>
 
